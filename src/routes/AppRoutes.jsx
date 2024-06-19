@@ -1,16 +1,16 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Register from '../components/Register';
-import Login from '../components/Login';
-import Profile from '../components/Profile';
-import DeleteAccount from '../components/DeleteAccount';
-import About from '../components/About';
-import Users from '../components/Users';
-import MyCards from '../components/MyCards';
-import FavCard from '../components/FavCard';
-import CreateCard from '../components/card/Create';
-import Edit from '../components/card/Edit';
-import BissnessPage from '../pages/BissnessPage';
+import Register from '../components/Auth/Register';
+import Login from '../components/Auth/Login';
+import Profile from '../components/User/Profile';
+import DeleteAccount from '../components/Auth/DeleteAccount';
+import About from '../components/Pages/About';
+import Users from '../components/User/Users';
+import MyCards from '../components/Cards/MyCards';
+import FavCard from '../components/Cards/FavCard';
+import CreateCard from '../components/Cards/CreateCard';
+import Edit from '../components/Cards/EditCard';
+import BissnessPage from '../components/Pages/BissnessPage';
 
 function AppRoutes({ searchInput }) {
   return (

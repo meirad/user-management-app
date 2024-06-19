@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect, createContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
-import ResponsiveAppBar from './ui/ResponsiveAppBar';
+import ResponsiveAppBar from './layout/ResponsiveAppBar';
 import { UserContext, UserFavCardContext } from './UserContext';
 import { GetUserContext } from './GetUserContext';
 import { CardProvider } from './cardContext';
-import MyBottomNavigation from './ui/FooterBar';
+import MyBottomNavigation from './layout/FooterBar';
 import AppRoutes from './routes/AppRoutes';
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });

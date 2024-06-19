@@ -9,9 +9,7 @@ export const useGetUserProfile = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if (userInfo) { // Check if userInfo is not null
-      console.log(userInfo._id);
-
+    if (userInfo) { 
       var config = {
         method: 'get',
         maxBodyLength: 'Infinity',  
@@ -24,39 +22,14 @@ export const useGetUserProfile = () => {
       axios(config)
         .then(function (response) {
           const profiles = response.data;
-        setProfile(profiles);
-        console.log(profile);
-         
+        setProfile(profiles);         
         })
         .catch(function (error) {
           console.log(error);
         });
     }
-  }, [userInfo]); // Add userInfo as a dependency to the useEffect hook
+  }, [userInfo]); 
 
 
 };
-
-
-/*   useEffect(() => {    if (userInfo) {
-      const fetchUserProfile = async () => {
-        try {
-          const response = await axios.get(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${userInfo._id}`, {
-            headers: {
-              'x-auth-token': token
-            }
-          });
-        console.log(response.data);
-        localStorage.setItem('profile', JSON.stringify(response.data));
-        setProfile(response.data);
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-        }
-      };
-
-      fetchUserProfile();
-    }
-  }, []); */
-
-
 

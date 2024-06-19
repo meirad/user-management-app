@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { UserContext } from '../UserContext';
-import { GetUserContext } from '../GetUserContext';
+import { UserContext } from '../../UserContext';
+import { GetUserContext } from '../../GetUserContext';
 import { TextField, Button, Box, Typography, Avatar, Container, CssBaseline, Grid, Divider } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 

@@ -104,7 +104,12 @@ export default function SimpleTable({ searchInput }) {
 
   const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
+
   return (
+    <div>
+      <h1 style={{ fontSize: '4em', marginLeft: '70px', fontFamily: 'Roboto, sans-serif', fontWeight: 100 }}>Users</h1>
+      <h4 style={{ fontSize: '2em', marginLeft: '70px', fontFamily: 'Roboto, sans-serif', fontWeight: 100 }}>Here you can find all the users</h4>
+   
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
       <Paper sx={{ width: isMobile ? '100%' : '1100px', padding: '10px' }}>
         <TableContainer>
@@ -121,34 +126,40 @@ export default function SimpleTable({ searchInput }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedUsers.map((user, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row">
-                    {user.name.first} {user.name.last}
-                  </TableCell>
-                  {!isMobile && <TableCell align="left">{user.phone}</TableCell>}
-                  <TableCell align="left">{user.email}</TableCell>
-                  {!isMobile && <TableCell align="left">{user.address.city}</TableCell>}
-                  {!isMobile && <TableCell align="left">{user.address.state}</TableCell>}
-                  <TableCell align="left">
-                    <Checkbox 
-                      checked={user.isBusiness}
-                      onChange={(e) => handleCheckboxChange(user._id, e.target.checked)}
-                      name="isBusiness"
-                    />
-                  </TableCell>
-                  <TableCell align="center">
-                    {user.isAdmin ? (
-                      <DeleteForeverOutlinedIcon style={{ color: '#ff8b8b' }} />
-                    ) : (
-                      <IconButton onClick={() => handleDelete(user._id)}>
-                        <DeleteOutlinedIcon />
-                      </IconButton>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+  {displayedUsers.length > 0 ? (
+    displayedUsers.map((user, index) => (
+      <TableRow key={index}>
+        <TableCell component="th" scope="row">
+          {user.name.first} {user.name.last}
+        </TableCell>
+        {!isMobile && <TableCell align="left">{user.phone}</TableCell>}
+        <TableCell align="left">{user.email}</TableCell>
+        {!isMobile && <TableCell align="left">{user.address.city}</TableCell>}
+        {!isMobile && <TableCell align="left">{user.address.state}</TableCell>}
+        <TableCell align="left">
+          <Checkbox 
+            checked={user.isBusiness}
+            onChange={(e) => handleCheckboxChange(user._id, e.target.checked)}
+            name="isBusiness"
+          />
+        </TableCell>
+        <TableCell align="center">
+          {user.isAdmin ? (
+            <DeleteForeverOutlinedIcon style={{ color: '#ff8b8b' }} />
+          ) : (
+            <IconButton onClick={() => handleDelete(user._id)}>
+              <DeleteOutlinedIcon />
+            </IconButton>
+          )}
+        </TableCell>
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={6} align="center">No users found</TableCell>
+    </TableRow>
+  )}
+</TableBody>
           </Table>
         </TableContainer>
         <TablePagination
@@ -162,5 +173,7 @@ export default function SimpleTable({ searchInput }) {
         />
       </Paper>
     </div>
+    </div>
   );
 }
+

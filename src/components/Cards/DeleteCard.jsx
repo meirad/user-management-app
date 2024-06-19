@@ -19,7 +19,6 @@ const Delete = ({ cardId, bizNumber, token, fetchData }) => {
       fetchData();
     } catch (error) {
       console.error('Error during API call:', error);
-      // Handle error as needed
     }
   };
 

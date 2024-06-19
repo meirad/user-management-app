@@ -8,27 +8,28 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import CallIcon from '@mui/icons-material/Call';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { UserContext } from '../UserContext';
-import useCards from '../components/UseCards';
-import '../css/About.css';
-import Delete from './card/Delete';
+import { UserContext } from '../../UserContext';
+import useCards from '../Cards/UseCards';
+import '../../css/About.css';
+import Delete from '../Cards/DeleteCard';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
 const About = ({ searchInput }) => {
   const { allCards, isLoggedIn, handleFavCard, fetchData } = useCards();
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [setSelectedCard] = React.useState(null);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
 
-  const likedCards = userInfo ? allCards.filter(card => card.likes.includes(userInfo._id)) : []; 
-  
+/*   const likedCards = userInfo ? allCards.filter(card => card.likes.includes(userInfo._id)) : []; 
+ */  
 
   const filteredCards = allCards.filter(card =>
     card.title.toLowerCase().includes(searchInput.toLowerCase())
   );
+
 
   return (
     <div>
@@ -53,11 +54,15 @@ const About = ({ searchInput }) => {
               cursor: 'pointer'
             }}
           >
-              <CardMedia
+            <CardMedia
                 component="img"
                 alt="card image"
                 height="250px"
-                image={card.image.url}
+                src={card.image.url}
+                onError={(e) => { 
+                  e.target.onerror = null; 
+                  e.target.src="default_image_url";
+                }}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -87,9 +92,10 @@ const About = ({ searchInput }) => {
             style={{ color: card.likes.includes(userInfo._id) ? 'red' : 'inherit' }} 
           />
         </IconButton>
-        <IconButton color="inherit"  onClick={(event) => {
-          event.stopPropagation();
-        }}>
+  <IconButton color="inherit" onClick={(event) => {
+    event.stopPropagation();
+    window.location.href = `tel:${card.phone}`;
+      }}>
           <CallIcon />
         </IconButton>
       </>

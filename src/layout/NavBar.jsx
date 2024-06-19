@@ -4,7 +4,6 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import { Adb as AdbIcon, Menu as MenuIcon, Brightness7 as Brightness7Icon, Brightness4 as Brightness4Icon } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import { ColorModeContext } from '../App';
-import { UserContext } from '../UserContext';
 import { GetUserContext } from '../GetUserContext';
 import SearchBar from './ SearchBar';
 import { useNavigate } from 'react-router-dom';
@@ -49,21 +48,31 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-              keepMounted
-              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+  id="menu-appbar"
+  anchorEl={anchorElNav}
+  anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+  keepMounted
+  transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+  open={Boolean(anchorElNav)}
+  onClose={handleCloseNavMenu}
+  sx={{ display: { xs: 'block', md: 'none' } }}
+>
+  {pages.map((page) => (
+    <MenuItem 
+  key={page} 
+  onClick={() => {
+    (page.toLowerCase() === 'about' ? navigateToAbout :
+    page.toLowerCase() === 'users' ? navigateToUsers :
+    page.toLowerCase() === 'favcard' ? navigateToFavCard : 
+    page.toLowerCase() === 'mycards' ? navigateToMyCards :
+    null)();
+    handleCloseNavMenu();
+  }}
+>
+  <Typography textAlign="center">{page}</Typography>
+</MenuItem>
+  ))}
+</Menu>
           </Box>
           <Typography
             variant="h5"

@@ -69,6 +69,7 @@ function ResponsiveAppBar({ searchInput, setSearchInput }) {
 
 
   let pages = ['About'];
+  
   if (userInfo) {
     if (userInfo.isBusiness || userInfo.isAdmin) {
       pages.push('MyCards');

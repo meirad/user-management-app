@@ -3,10 +3,10 @@ import { Card, CardActions, CardContent, CardMedia, Typography, Divider, Box, Ic
 import { Call as CallIcon, Favorite as FavoriteIcon, AddCircle as AddCircleIcon, Create as CreateIcon } from '@mui/icons-material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Delete from './card/Delete';
-import '../css/MyCards.css';
-import { UserContext } from '../UserContext';
-import { CardContext } from '../cardContext';
+import Delete from './DeleteCard';
+import '../../css/MyCards.css';
+import { UserContext } from '../../UserContext';
+import { CardContext } from '../../cardContext';
 import useCards from './UseCards';
 
 const MyCards = ({ searchInput }) => {
@@ -69,11 +69,15 @@ const MyCards = ({ searchInput }) => {
   };
 
   return (
+    <div>
+      <h1 style={{ fontSize: '4em', marginLeft: '70px', fontFamily: 'Roboto, sans-serif', fontWeight: 100 }}>My Cards</h1>
+      <h4 style={{ fontSize: '2em', marginLeft: '70px', fontFamily: 'Roboto, sans-serif', fontWeight: 100 }}>Here you can find all your businesses</h4>
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       <div className="my-cards-container">
         {filteredCards.length > 0 ? (
           filteredCards.map((card, index) => (
             <Card
+            key={card._id}
             onClick={() => {
               navigate(`/businesspage/${card._id}`);
               setSelectedCard(card.id);
@@ -133,7 +137,6 @@ const MyCards = ({ searchInput }) => {
                     </IconButton>
                     <IconButton color="inherit" onClick={(event) => {
                       event.stopPropagation();
-                      // Add your delete logic here
                     }}>
                       <Delete  
                         cardId={card._id} 
@@ -178,6 +181,7 @@ const MyCards = ({ searchInput }) => {
           </Typography>
         )}
       </div>
+    </div>
     </div>
   );
 };

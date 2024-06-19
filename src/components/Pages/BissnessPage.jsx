@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Divider } from '@mui/material';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
-import '../css/Bissness.css';
-
+import '../../css/Bissness.css';
 
 const BissnessPage = () => {
   const { id } = useParams(); 

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { UserFavCardContext } from '../UserContext';
-import { UserContext } from '../UserContext';
+import { UserFavCardContext } from '../../UserContext';
+import { UserContext } from '../../UserContext';
 
 const useCards = () => {
   const [allCards, setAllCards] = useState([]);
