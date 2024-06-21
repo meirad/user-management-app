@@ -9,6 +9,8 @@ import { UserContext } from '../../UserContext';
 import { CardContext } from '../../cardContext';
 import useCards from './UseCards';
 
+const noPic = 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTeyKTG0Gfx42-5Snmu1-18eMPpuY-s4-Mmu12Xl-uC25VGZbk465RUbHKhJnnL8ajf'; 
+
 const MyCards = ({ searchInput }) => {
   const navigate = useNavigate();
   const [myCards, setMyCards] = useState([]);
@@ -94,6 +96,10 @@ const MyCards = ({ searchInput }) => {
                 alt="card image"
                 height="250px"
                 image={card.image.url}
+                onError={(e) => {
+                  e.currentTarget.src = noPic;
+                  e.currentTarget.onerror = null;
+                }}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

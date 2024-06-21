@@ -6,6 +6,10 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
 import '../../css/Bissness.css';
 
+
+const noPic = 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTeyKTG0Gfx42-5Snmu1-18eMPpuY-s4-Mmu12Xl-uC25VGZbk465RUbHKhJnnL8ajf'; 
+
+
 const BissnessPage = () => {
   const { id } = useParams(); 
   const [card, setCard] = useState(null);
@@ -38,7 +42,6 @@ const BissnessPage = () => {
 
   const address = card ? `${card.address.houseNumber} ${card.address.street}, ${card.address.city} ${card.address.country}` : '';
   const googleMapsUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyA_pYPltgWqBbgE-imR1NFG6cNGmaZrjyo&q=${encodeURIComponent(address)}`;
-console.log(card);
   return (
     <div className='container'  style={{marginLeft: '10px'}}>
       {card && (
@@ -53,6 +56,10 @@ console.log(card);
             height: '50px', 
             borderRadius: '50%', 
             }} 
+            onError={(e) => {
+              e.currentTarget.src = noPic;
+              e.currentTarget.onerror = null;
+            }}
         />
         <h2 style={{marginLeft: '10px'}}> {card.title}</h2>
      

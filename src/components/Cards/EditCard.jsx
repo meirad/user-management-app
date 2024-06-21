@@ -340,11 +340,20 @@ const Edit = () => {
                 error={Boolean(errors['address.zip'])}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <Button type="submit" fullWidth>
                 Submit
               </Button>
             </Grid>
+            <Grid item xs={12} sm={6}>
+            <Button 
+              onClick={() => navigate('/mycards')} 
+              fullWidth
+              style={{ backgroundColor: 'red', color: 'white' }}
+            >
+              Cancel
+            </Button>
+          </Grid>
           </Grid>
           {errors.submit && (
             <Typography variant="body2" color="error">

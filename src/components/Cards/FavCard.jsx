@@ -13,6 +13,9 @@ import '../../css/About.css';
 import { useNavigate } from 'react-router-dom';
   import IconButton from '@mui/material/IconButton';
 
+  const noPic = 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTeyKTG0Gfx42-5Snmu1-18eMPpuY-s4-Mmu12Xl-uC25VGZbk465RUbHKhJnnL8ajf'; 
+
+
 const FavCard = ({searchInput}) => {
   const { allCards, isLoggedIn, handleFavCard } = useCards();
   const { userInfo } = useContext(UserContext);
@@ -56,6 +59,10 @@ const FavCard = ({searchInput}) => {
               alt="card image"
               height="250px"
               image={card.image.url}
+              onError={(e) => {
+                e.currentTarget.src = noPic;
+                e.currentTarget.onerror = null;
+              }}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -82,24 +89,22 @@ const FavCard = ({searchInput}) => {
                   card.likes.includes(userInfo._id) ? (
                     <IconButton color="inherit" onClick={(event) => {
                       event.stopPropagation();
+                      handleFavCard(card._id);
                     }}>
-                    <FavoriteIcon 
-                      className="favorite-icon"
-                      style={{ color: 'red' }} 
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleFavCard(card._id);
-                      }}
-                    />
-                  </IconButton>
+                      <FavoriteIcon 
+                        className="favorite-icon"
+                        style={{ color: 'red' }} 
+                      />
+                    </IconButton>
                   ) : (
-                    <FavoriteIcon 
-                      className="favorite-icon"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleFavCard(card._id);
-                      }}
-                    />
+                    <IconButton color="inherit" onClick={(event) => {
+                      event.stopPropagation();
+                      handleFavCard(card._id);
+                    }}>
+                      <FavoriteIcon 
+                        className="favorite-icon"
+                      />
+                    </IconButton>
                   )
                 ) : null}
             </CardActions>

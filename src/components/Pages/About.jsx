@@ -15,20 +15,20 @@ import Delete from '../Cards/DeleteCard';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
+const noPic = 'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTeyKTG0Gfx42-5Snmu1-18eMPpuY-s4-Mmu12Xl-uC25VGZbk465RUbHKhJnnL8ajf'; 
+
 const About = ({ searchInput }) => {
   const { allCards, isLoggedIn, handleFavCard, fetchData } = useCards();
-  const [setSelectedCard] = React.useState(null);
+  const [selectedCard, setSelectedCard] = React.useState(null);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
 
-/*   const likedCards = userInfo ? allCards.filter(card => card.likes.includes(userInfo._id)) : []; 
- */  
-
   const filteredCards = allCards.filter(card =>
     card.title.toLowerCase().includes(searchInput.toLowerCase())
   );
+
 
 
   return (
@@ -41,29 +41,30 @@ const About = ({ searchInput }) => {
         {filteredCards.length > 0 ? (
           filteredCards.map((card, index) => (
             <Card
-            key={index}
-            onClick={() => {
-              navigate(`/businesspage/${card._id}`);
-              setSelectedCard(card.id);
-            }}
-            sx={{
-              width: '350px',
-              display: 'flex',
-              flexDirection: 'column',
-              margin: 2,
-              cursor: 'pointer'
-            }}
-          >
-            <CardMedia
+              key={index}
+              onClick={() => {
+                navigate(`/businesspage/${card._id}`);
+                setSelectedCard(card._id);
+              }}
+              sx={{
+                width: '350px',
+                display: 'flex',
+                flexDirection: 'column',
+                margin: 2,
+                cursor: 'pointer'
+              }}
+            >
+              <CardMedia
                 component="img"
-                alt="card image"
+                alt={card.image.alt}
                 height="250px"
                 src={card.image.url}
-                onError={(e) => { 
-                  e.target.onerror = null; 
-                  e.target.src="default_image_url";
+                 onError={(e) => {
+                 e.currentTarget.src = noPic;
+                  e.currentTarget.onerror = null; 
                 }}
-              />
+                
+              />   
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {card.title}
@@ -79,43 +80,43 @@ const About = ({ searchInput }) => {
                 </Typography>
               </CardContent>
               <CardActions>
-              <Box display="flex" justifyContent="space-between" width="100%">
-  <Box display="flex">
-    {isLoggedIn && (
-      <>
-        <IconButton color="inherit"  onClick={(event) => {
-          event.stopPropagation();
-          handleFavCard(card._id);
-        }}>
-          <FavoriteIcon 
-            className="favorite-icon"
-            style={{ color: card.likes.includes(userInfo._id) ? 'red' : 'inherit' }} 
-          />
-        </IconButton>
-  <IconButton color="inherit" onClick={(event) => {
-    event.stopPropagation();
-    window.location.href = `tel:${card.phone}`;
-      }}>
-          <CallIcon />
-        </IconButton>
-      </>
-    )}
-  </Box>
-  <Box display="flex">
-    {isLoggedIn && userInfo.isAdmin && (
-      <IconButton color="inherit"  onClick={(event) => {
-        event.stopPropagation();
-      }}>
-        <Delete 
-          cardId={card._id} 
-          bizNumber={card.bizNumber} 
-          token={token} 
-          fetchData={fetchData} 
-        />
-      </IconButton>
-    )}
-  </Box>
-</Box>
+                <Box display="flex" justifyContent="space-between" width="100%">
+                  <Box display="flex">
+                    {isLoggedIn && (
+                      <>
+                        <IconButton color="inherit" onClick={(event) => {
+                          event.stopPropagation();
+                          handleFavCard(card._id);
+                        }}>
+                          <FavoriteIcon 
+                            className="favorite-icon"
+                            style={{ color: card.likes.includes(userInfo._id) ? 'red' : 'inherit' }} 
+                          />
+                        </IconButton>
+                        <IconButton color="inherit" onClick={(event) => {
+                          event.stopPropagation();
+                          window.location.href = `tel:${card.phone}`;
+                        }}>
+                          <CallIcon />
+                        </IconButton>
+                      </>
+                    )}
+                  </Box>
+                  <Box display="flex">
+                    {isLoggedIn && userInfo.isAdmin && (
+                      <IconButton color="inherit" onClick={(event) => {
+                        event.stopPropagation();
+                      }}>
+                        <Delete 
+                          cardId={card._id} 
+                          bizNumber={card.bizNumber} 
+                          token={token} 
+                          fetchData={fetchData} 
+                        />
+                      </IconButton>
+                    )}
+                  </Box>
+                </Box>
               </CardActions>
             </Card>
           ))

@@ -12,11 +12,11 @@ import CreateCard from '../components/Cards/CreateCard';
 import Edit from '../components/Cards/EditCard';
 import BissnessPage from '../components/Pages/BissnessPage';
 
-function AppRoutes({ searchInput }) {
+
+function AppRoutes({ searchInput,  setSnackbarOpen}) {
   return (
     <Routes>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register setSnackbarOpen={setSnackbarOpen} />} />      <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/delete-account" element={<DeleteAccount />} />
       <Route path="/" element={<About searchInput={searchInput} />} />

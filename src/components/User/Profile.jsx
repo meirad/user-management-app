@@ -4,6 +4,7 @@ import { UserContext } from '../../UserContext';
 import { GetUserContext } from '../../GetUserContext';
 import { TextField, Button, Box, Typography, Avatar, Container, CssBaseline, Grid, Divider } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
@@ -23,6 +24,7 @@ const Profile = () => {
     }
   });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
 useEffect(() => {
     const storedUserInfo = localStorage.getItem('userInfo');
@@ -284,9 +286,24 @@ useEffect(() => {
               />
             </Grid>
           </Grid>
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Update
-          </Button>
+          <Grid container spacing={2}>
+  <Grid item xs={6}>
+    <Button type="submit" fullWidth 
+    style={{marginTop: '10px'}}>
+      Submit
+    </Button>
+  </Grid>
+  <Grid item xs={6}>
+    <Button 
+      onClick={() => navigate('/')} 
+      fullWidth
+      style={{ backgroundColor: 'red', color: 'white', marginTop: '10px'}}
+    >
+      Cancel
+    </Button>
+  </Grid>
+</Grid>
+          
           {errors.submit && <Typography variant="body2" color="error">{errors.submit}</Typography>}
         </Box>
       </Container>

@@ -167,9 +167,12 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
             >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {settings.map((setting) => (
-           <Button key={setting} onClick={() => setting === 'Logout' ? logout() : navigateTo(setting)}>
-           {setting}
-         </Button>
+                <Button key={setting} onClick={() => {
+                  setting === 'Logout' ? logout() : navigateTo(setting);
+                  handleCloseUserMenu();
+                }}>
+                  {setting}
+                </Button>
                 ))}
               </div>
             </Menu>

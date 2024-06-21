@@ -153,13 +153,17 @@ return (
           >
             Login
           </Button>
-          <Grid container>
-            <Grid item>
-              <Link href="/Register" variant="body2">
-                {"Don't have an account? Register"}
-              </Link>
-            </Grid>
-          </Grid>
+            <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Link href="/Register" variant="body2">
+              {"Don't have an account? Register"}
+            </Link>
+          </Box>
         </Box>
       </Box>
         

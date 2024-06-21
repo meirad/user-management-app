@@ -7,8 +7,8 @@ const useCards = () => {
   const [allCards, setAllCards] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { favoriteCards, setFavoriteCards } = useContext(UserFavCardContext);
-  const { userInfo } = useContext(UserContext);
-  const token = localStorage.getItem('token');
+/*   const { userInfo } = useContext(UserContext);
+ */  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem('userInfo');

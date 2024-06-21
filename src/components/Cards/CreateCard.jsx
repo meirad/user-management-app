@@ -114,7 +114,7 @@ const CreateCard = () => {
       console.log('Response data:', response.data);
     setSnackbarMessage('Card created successfully!');
       setSnackbarOpen(true); 
-      navigate('/mycards'); // Navigate back to MyCards after successful submission
+      navigate('/mycards'); 
     } catch (error) {
       console.error('Error during API call:', error);
       setErrors({ ...errors, submit: error.message });
