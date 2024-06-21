@@ -20,6 +20,8 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
   const navigateToMyCards = () => navigate('/mycards');
   const navigateToFavCard = () => navigate('/FavCard');
   
+
+  
   return (
     <AppBar position='fixed'>
       <Container maxWidth="xl">
@@ -167,12 +169,15 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
             >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {settings.map((setting) => (
-                <Button key={setting} onClick={() => {
-                  setting === 'Logout' ? logout() : navigateTo(setting);
-                  handleCloseUserMenu();
-                }}>
-                  {setting}
-                </Button>
+               <Button 
+               key={setting} 
+               onClick={() => {
+                 setting === 'Logout' ? logout() : navigateTo(setting);
+                 handleCloseUserMenu();
+               }}
+             >
+               {setting}
+             </Button>
                 ))}
               </div>
             </Menu>

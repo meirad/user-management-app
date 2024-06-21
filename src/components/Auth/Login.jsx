@@ -21,19 +21,12 @@ import { useGetUserProfile } from '../../Services/GetUser';
 import {useUserProfile} from '../../Services/GetUser';
 
 
-
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
- const [token, setToken] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
- const { userInfo, setUserInfo } = useContext(UserContext);
-  const {profile, setProfile}  = useContext(GetUserContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { setUserInfo } = useContext(UserContext);
+  const { setProfile } = useContext(GetUserContext);
   const [errors, setErrors] = useState({});
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-
-  
-
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem('userInfo');
@@ -42,84 +35,89 @@ const Login = () => {
       setUserInfo(decoded);
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [setUserInfo]);
 
-
-  console.log(userInfo);
-
+    
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  let loginAttempts = {};
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = formData.email;
     const now = new Date();
-
     let userData = localStorage.getItem(email);
-
+  
     if (userData) {
       userData = JSON.parse(userData);
       if (userData.attempts >= 3 && now - new Date(userData.lastAttempt) < 24 * 60 * 60 * 1000) {
-        setErrors({ ...errors, 'loginAttempts': 'Too many login attempts. Try again in 24 hours' });
-        console.log('Too many login attempts. Try again in 24 hours');
+        setErrors({ ...errors, loginAttempts: 'Too many login attempts. Try again in 24 hours' });
+        alert('Too many login attempts. Try again in 24 hours');
         return;
       } else if (now - new Date(userData.lastAttempt) >= 24 * 60 * 60 * 1000) {
-        userData = { attempts: 1, lastAttempt: now };
+        userData = { attempts: 0, lastAttempt: now };
         console.log('Resetting login attempts');
-      } else {
-        userData.attempts++;
-        userData.lastAttempt = now;
-        console.log('Incrementing login attempts');
       }
     } else {
-      userData = { attempts: 1, lastAttempt: now };
-      console.log('First login attempt');
+      userData = { attempts: 0, lastAttempt: now };
     }
   
-    localStorage.setItem(email, JSON.stringify(userData));
-  
-    e.preventDefault();
     try {
       const response = await axios.post('https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/login', formData);
-      const getToken =  response.data;
-      const decoded = jwtDecode(getToken);
+      const token = response.data;
+      const decoded = jwtDecode(token);
       setUserInfo(decoded);
-      localStorage.setItem('userInfo', JSON.stringify(decoded)); 
-      localStorage.setItem('token', getToken);
+      localStorage.setItem('userInfo', JSON.stringify(decoded));
+      localStorage.setItem('token', token);
       setIsLoggedIn(true);
-    
+  
+      userData = { attempts: 0, lastAttempt: now };
+      localStorage.setItem(email, JSON.stringify(userData));
+  
+      alert('Login successful');
+      window.location.reload();
     } catch (error) {
-      console.error(error);
-      if (error.response.status === password || error.response.status === email) {
-        setErrors({ ...errors, [error.response.data]: error.response.data });
-
+      if (userData.attempts < 3) {
+        userData.attempts++;
+        userData.lastAttempt = now;
+        alert(`${userData.attempts} attempts till lockout`);
+      } else {
+        setErrors({ ...errors, loginAttempts: 'Too many login attempts. Try again in 24 hours' });
+        alert('Too many login attempts. Try again in 24 hours');
       }
-
+      localStorage.setItem(email, JSON.stringify(userData));
+  
+      console.error(error);
+      if (error.response && error.response.data) {
+        setErrors({ ...errors, login: error.response.data.message });
+      } else {
+        setErrors({ ...errors, login: 'An unexpected error occurred. Please try again.' });
+      }
     }
+    
   };
   
-return (
-    <div>
-    {isLoggedIn && <Navigate to="/" /> }
-  
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
-    >
+      >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
+          <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        Login
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -132,6 +130,8 @@ return (
             autoComplete="email"
             autoFocus
             onChange={handleChange}
+            error={Boolean(errors.email)}
+            helperText={errors.email}
           />
           <TextField
             margin="normal"
@@ -143,35 +143,43 @@ return (
             id="password"
             autoComplete="current-password"
             onChange={handleChange}
+            error={Boolean(errors.password)}
+            helperText={errors.password}
           />
-        
+          {errors.login && (
+            <Typography variant="body2" color="error">
+              {errors.login}
+            </Typography>
+          )}
+          {errors.loginAttempts && (
+            <Typography variant="body2" color="error">
+              {errors.loginAttempts}
+            </Typography>
+          )}
           <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Login
-          </Button>
-            <Box
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          
+        >
+          Login
+        </Button>
+          <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Link href="/Register" variant="body2">
+            <Link href="/register" variant="body2">
               {"Don't have an account? Register"}
             </Link>
           </Box>
         </Box>
       </Box>
-        
     </Container>
-
-  </div>
-);
-  };
-
+  );
+};
 
 export default Login;

@@ -34,7 +34,9 @@ function ResponsiveAppBar({ searchInput, setSearchInput }) {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    window.location.reload();
     navigate('/');
+   
   };
 
   const handleSignIn = () => {

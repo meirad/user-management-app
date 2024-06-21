@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import { TextField, Button, Grid, Box, Container, CssBaseline, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
- import { CardContext } from '../../cardContext';
- 
+import { CardContext } from '../../cardContext';
+
 const CreateCard = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-   const { setSnackbarOpen, setSnackbarMessage } = useContext(CardContext); 
+  const { setSnackbarOpen, setSnackbarMessage } = useContext(CardContext);
   const [cardData, setCardData] = useState({
     title: '',
     subtitle: '',
@@ -49,6 +49,13 @@ const CreateCard = () => {
     }
   };
 
+
+  const isIsraeliPhoneNumber = (phoneNumber) => {
+    const regex = /^(\+972|0)([23489]|5[0123456789])[0-9]{7}$/;
+    return regex.test(phoneNumber);
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newErrors = {};
@@ -61,15 +68,12 @@ const CreateCard = () => {
     if (!cardData.description || cardData.description.length < 2 || cardData.description.length > 1024) {
       newErrors.description = 'Description is required and should be 2-1024 characters long';
     }
-    if (!cardData.phone || cardData.phone.length < 9 || cardData.phone.length > 11) {
-      newErrors.phone = 'Phone is required and should be 9-11 characters long';
+    if (!cardData.phone || !isIsraeliPhoneNumber(cardData.phone)) {
+      newErrors.phone = 'Phone is required and should be a valid Israeli phone number';
     }
     if (!cardData.email || cardData.email.length < 5) {
-      newErrors.email = 'Email is required and should be at least 5 characters long';
+      newErrors.email = 'email is required and should be 5 characters long';
     }
- /*    if (cardData.web && cardData.web.length < 14) {
-      newErrors.web = 'Web should be at least 14 characters long';
-    } */
     if (!cardData.image.url) {
       newErrors['image.url'] = 'Image URL is required';
     }
@@ -112,9 +116,9 @@ const CreateCard = () => {
     try {
       const response = await axios(config);
       console.log('Response data:', response.data);
-    setSnackbarMessage('Card created successfully!');
-      setSnackbarOpen(true); 
-      navigate('/mycards'); 
+      setSnackbarMessage('Card created successfully!');
+      setSnackbarOpen(true);
+      navigate('/mycards');
     } catch (error) {
       console.error('Error during API call:', error);
       setErrors({ ...errors, submit: error.message });
@@ -300,14 +304,14 @@ const CreateCard = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Button 
-              onClick={() => navigate('/mycards')} 
-              fullWidth
-              style={{ backgroundColor: 'red', color: 'white' }}
-            >
-              Cancel
-            </Button>
-          </Grid>
+              <Button 
+                onClick={() => navigate('/mycards')} 
+                fullWidth
+                style={{ backgroundColor: 'red', color: 'white' }}
+              >
+                Cancel
+              </Button>
+            </Grid>
           </Grid>
           {errors.submit && (
             <Typography variant="body2" color="error">

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Checkbox, FormControlLabel, Box, Typography, Avatar, Container, CssBaseline, Grid } from '@mui/material';
+import { Button, Box, Typography, Avatar, Container, CssBaseline, Snackbar, Alert, Link } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Divider from '@mui/material/Divider';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
+import FormFields from './RegisterFrom'; 
 
 const Register = ({ setSnackbarOpen }) => {
   const [formData, setFormData] = useState({
@@ -95,7 +92,6 @@ const Register = ({ setSnackbarOpen }) => {
 
     try {
       const response = await axios(config);
-      console.log(JSON.stringify(response.data));
       setSnackbarOpenInternal(true);
       setSnackbarOpen(true);
       navigate('/login');
@@ -132,175 +128,7 @@ const Register = ({ setSnackbarOpen }) => {
           Register
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="name.first"
-                onChange={handleChange}
-                label="First Name"
-                required
-                fullWidth
-                error={Boolean(errors['name.first'])}
-                helperText={errors['name.first']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="name.middle"
-                onChange={handleChange}
-                label="Middle Name"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="name.last"
-                onChange={handleChange}
-                label="Last Name"
-                required
-                fullWidth
-                error={Boolean(errors['name.last'])}
-                helperText={errors['name.last']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="phone"
-                onChange={handleChange}
-                label="Phone"
-                required
-                fullWidth
-                error={Boolean(errors.phone)}
-                helperText={errors.phone}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="email"
-                onChange={handleChange}
-                label="Email"
-                required
-                fullWidth
-                error={Boolean(errors.email)}
-                helperText={errors.email}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="password"
-                onChange={handleChange}
-                label="Password"
-                type="password"
-                required
-                fullWidth
-                error={Boolean(errors.password)}
-                helperText={errors.password}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="image.url"
-                onChange={handleChange}
-                label="Image URL"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="image.alt"
-                onChange={handleChange}
-                label="Image Alt Text"
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-
-          <Divider sx={{ my: 2 }}>Address</Divider>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.state"
-                onChange={handleChange}
-                label="State"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.country"
-                onChange={handleChange}
-                label="Country"
-                required
-                fullWidth
-                error={Boolean(errors['address.country'])}
-                helperText={errors['address.country']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.city"
-                onChange={handleChange}
-                label="City"
-                required
-                fullWidth
-                error={Boolean(errors['address.city'])}
-                helperText={errors['address.city']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.street"
-                onChange={handleChange}
-                label="Street"
-                required
-                fullWidth
-                error={Boolean(errors['address.street'])}
-                helperText={errors['address.street']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.houseNumber"
-                onChange={handleChange}
-                label="House Number"
-                type="number"
-                required
-                fullWidth
-                error={Boolean(errors['address.houseNumber'])}
-                helperText={errors['address.houseNumber']}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="address.zip"
-                onChange={handleChange}
-                label="ZIP Code"
-                type="number"
-                required
-                fullWidth
-                error={Boolean(errors['address.zip'])}
-                helperText={errors['address.zip']}
-              />
-            </Grid>
-          </Grid>
-          <Divider sx={{ my: 2 }} />
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <FormControlLabel
-              control={<Checkbox name="isBusiness" onChange={handleChange} />}
-              label="Is Business"
-            />
-            <FormControlLabel
-              control={<Checkbox name="isAdmin" onChange={handleChange} />}
-              label="Is Admin"
-            />
-          </Box>
+          <FormFields formData={formData} errors={errors} handleChange={handleChange} />
           <Button
             type="submit"
             fullWidth
