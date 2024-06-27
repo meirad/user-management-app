@@ -23,6 +23,7 @@ const About = () => {
         <strong>Profile</strong> - This is where you can view and edit your profile information. You can change your name, email, and password on this page.
       </Typography>
 
+
       <Typography variant="body1" style={{ marginBottom: '15px' }}>
         <strong>All Cards</strong> - This is where you can view all the cards that are available on the site. You can click on the cards to view more details about them. If you are logged in, you can add a card to your favorites by clicking on the favorite button.
       </Typography>
@@ -30,11 +31,17 @@ const About = () => {
       <Typography variant="body1" style={{ marginBottom: '15px' }}>
         <strong>Favorites</strong> - This is where you can view all the cards that you have added to your favorites. You can click on the cards to view more details about them. If you are logged in, you can remove a card from your favorites by clicking on the favorite button.
       </Typography>
+
+      <Typography variant="body1" style={{ marginBottom: '15px' }}>
+        <strong> My Cards </strong> - This is where you can view all the cards that you have created. You can click on the cards to view more details about them. If you are logged in, you can edit, delete, call and by clicking on the on the icons.  
+        you can also create a new card by clicking on the "+" button at the bottom right corner of the page.
+
+      </Typography>
      
       <Typography variant="body1" style={{ marginBottom: '15px' }}>
         <strong>Users</strong> - This is where you can view all the users that are registered on the site. You can delete a user from the site if they are not an admin, and change their business status.
       </Typography>
-      
+
       <Typography variant="body1" style={{ marginBottom: '15px' }}>
         Our site is user-friendly and easy to navigate. You can use the navigation bar at the top of the page to go to different sections of the site. If you have any questions or need further assistance, please contact our support team.
       </Typography>
