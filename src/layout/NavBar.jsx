@@ -16,10 +16,12 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
   const navigateTo = (path) => navigate(path);
 
   const navigateToAbout = () => navigate('/');
-  const navigateToUsers = () => navigate('/users');
+  const navigateToAllcards = () => {
+    console.log('Navigating to Allcards');
+    navigate('/allcards');
+  };  const navigateToUsers = () => navigate('/users');
   const navigateToMyCards = () => navigate('/mycards');
   const navigateToFavCard = () => navigate('/FavCard');
-  
 
   
   return (
@@ -63,7 +65,9 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
     <MenuItem 
   key={page} 
   onClick={() => {
-    (page.toLowerCase() === 'about' ? navigateToAbout :
+    (
+    page.toLowerCase() === 'about' ? navigateToAbout :
+    page.toLowerCase() === 'allcards' ? navigateToAllcards :
     page.toLowerCase() === 'users' ? navigateToUsers :
     page.toLowerCase() === 'favcard' ? navigateToFavCard : 
     page.toLowerCase() === 'mycards' ? navigateToMyCards :
@@ -100,6 +104,7 @@ const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNa
               key={page}
               onClick={
                 page.toLowerCase() === 'about' ? navigateToAbout :
+                page.toLowerCase() === 'allcards' ? navigateToAllcards :
                 page.toLowerCase() === 'users' ? navigateToUsers :
                 page.toLowerCase() === 'favcard' ? navigateToFavCard : 
                 page.toLowerCase() === 'mycards' ? navigateToMyCards :
