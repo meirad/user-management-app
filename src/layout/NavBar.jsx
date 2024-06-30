@@ -5,7 +5,7 @@ import { Adb as AdbIcon, Menu as MenuIcon, Brightness7 as Brightness7Icon, Brigh
 import { useTheme } from '@mui/material/styles';
 import { ColorModeContext } from '../App';
 import { GetUserContext } from '../GetUserContext';
-import SearchBar from './ SearchBar';
+import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = ({ isLoggedIn, logout, handleSignIn, handleRegister, handleOpenNavMenu, handleOpenUserMenu, anchorElNav, anchorElUser, handleCloseNavMenu, handleCloseUserMenu, pages, settings, searchInput, handleSearchChange }) => {
